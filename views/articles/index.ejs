@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>BLOG</title> <!--- we use bootstrap tp help style our pages-->
+</head>
+<body>
+    <div class="container">
+        <h1 class="mb-4"> Blog Articles </h1> <!-- mb-4 means margin bottom of 4-->
+        <a href="/articles/new" class="btn btn-success"> New Article </a> <!-- btn-ssuccess turns it into a green button-->
+        
+
+    
+            <% articles.forEach(article => { %>  <!-- no equals sign at the begginin of the ejs tag meaning we can run js and its not inputted onto the page-->
+                <div class="card mt-4"> <!-- for each loops through each article and then display our cards which is inside the div below-->
+                    <div class="card-body"> <!-- in this div, were storing all of our text for the title, body etc-->
+                        <h4 class="card-title"><%= article.title %></h4> <!-- title of article is populated here-->
+                        <div class="card-subtitle text-muted mb-2"> 
+                            <%= article.createdAt.tolocalDateString %> <!-- converts the date/time into strinf-->
+                        </div> <!-- the text muted just makes the text grey-->  
+                        <div class="card-text mb-2"><%= article.description %></div>
+                    </div>  
+                </div>
+              <% }) %>
+        </div>
+       
+    
+</body>
+</html>

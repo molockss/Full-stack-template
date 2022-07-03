@@ -1,0 +1,34 @@
+<!-- this ejs is created as a partial one because, we need to the same layout when we are writing the new article and 
+also editing the article. so in our new article JS we use the syntax with an opening tag %- include('_form_fields') %-> this mean
+that we are calling upon this form fields ejs everytime we need to edit or create and article -->
+
+<div class="form-group">
+    <label for="title"> Title </label> <!-- required after the input below just means you cant submit the form without entering the info-->
+    <input required type="text" name="title" id="title" 
+    class="form-control"> <!-- form control is just a type of styling with bootstrap-->
+    </div>
+    <!-- Above is the first div for the title part when the user selects new article-->
+    
+    <div class="form-group">
+        <label for="description"> Description </label> 
+        <textarea name="description" id="description" class="form-control"></textarea> <!--text area just means area when you can type-->
+     <!-- form control is just a type of styling with bootstrap-->
+       
+        </div>
+        <!-- Above is the second div for the description part when the user selects new article-->
+    
+        <div class="form-group">
+            <label for="markdown"> Markdown </label> 
+            <textarea name="markdown" id="markdown" class="form-control"></textarea> <!--text area just means area when you can type-->
+         <!-- form control is just a type of styling with bootstrap-->
+           
+            </div>
+        
+        <a href="/" class="btn btn-secondary"> Cancel.</a> <!-- button allows us to go back to our index page-->
+        <button type="submit" class="btn btn-primary"> Save </button> 
+    
+    
+    
+    
+    
+    

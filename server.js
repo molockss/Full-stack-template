@@ -1,24 +1,28 @@
 const express = require('express')
 const articleRouter = require ('./routes/articles')
+const mongoose = require ('mongoose')
 const app = express()
 const cors = require('cors')
-const MongoClient = require('mongodb').MongoClient
+
 require('dotenv').config()
-const PORT = 5000
+dbstring = 'mongodb+srv://molocks:Atwc3359@cluster0.ieiq2.mongodb.net/?retryWrites=true&w=majority'
 
-let db,
-    dbConnectionString = process.env.DB_STRING,
-    dbName = 'fullstack',
-    collection
 
-MongoClient.connect(dbConnectionString)
-    .then(client => {
-        console.log(`Connected to Database`)
-        db = client.db(dbName)
-        collection = db.collection('blog ')
-    })
+mongoose.connect(dbstring, {
+	useNewUrlParser: true,
+	useUnifiedTopology: true,
+	
+})
 
-    app.set ('view engine', 'ejs' )  // view engine converts ejs code to html
+const db = mongoose.connection;
+db.on("error", console.error.bind(console, "connection error: "));
+db.once("open", function () {
+  console.log("Connected successfully");
+});
+
+
+
+app.set ('view engine', 'ejs' )  // view engine converts ejs code to html
 
 app.use ('/articles', articleRouter)  // we want the articles to appear after the / then everything else
 
@@ -46,7 +50,7 @@ app.use(cors())
 
 
 
-//PORT = 5000
+//PORT = 8000
 app.listen(process.env.PORT || PORT, () => {
     console.log(`Server is running on port`)
 })

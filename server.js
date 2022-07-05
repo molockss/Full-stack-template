@@ -25,7 +25,7 @@ db.once("open", function () {
 app.set ('view engine', 'ejs' )  // view engine converts ejs code to html
 
 app.use ('/articles', articleRouter)  // we want the articles to appear after the / then everything else
-
+app.use (express.urlencoded({ extended: false})) // allows use to acces the form data from our article route
 
 app.get ('/', (req,res)=> {
     const articles = [ {

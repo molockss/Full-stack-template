@@ -33,14 +33,11 @@ app.use (express.urlencoded({ extended: false})) // allows use to acces the form
 app.get ('/', async (req,res)=> {
 
     const articles = await Article.find().sort({ // we're now passing in all our articles into the home page based on when we created them
-        createdAt: 'descending'
+        createdAt: 'descending'})
+           res.render('articles/index', {articles: articles})
     })
-  
-
-    
-    res.render ('articles/index', {articles: articles}) // we use render as its going to access the views folder and the index.ejs inside
+  // we use render as its going to access the views folder and the index.ejs inside
     // we can then pass in whatever we want so "articles" is located in ejs and we're passing an object
-})
 
 
 

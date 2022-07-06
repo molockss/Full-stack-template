@@ -22,6 +22,7 @@
                             <%= article.createdAt.tolocalDateString %> <!-- converts the date/time into strinf-->
                         </div> <!-- the text muted just makes the text grey-->  
                         <div class="card-text mb-2"><%= article.description %></div>
+                        <a href="articles/<%= article.id %>" class="btn btn-primary"> Read More</a>
                     </div>  
                 </div>
               <% }) %>

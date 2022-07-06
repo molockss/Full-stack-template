@@ -9,21 +9,31 @@ const router = express.Router() // this is a function and gives us a route we ca
 
 
 router.get ('/new', (req, res) => {
-    res.render ('articles/new')
+    res.render ('articles/new', {article: new Article()}) // we're passing in a brand new defualt article to stop it reloading something thats not valid
 })
 
+router.get ('/:id', async (req,res)=>{  //we've set up the route to respond to article id's
+const article = await Article.findById(req.params.id) // get the article
+ if (article ==null) res.redirect('/')
+res.render('./articles/show', {article: article}) // we send this id when a new file is created it's stored in /show because thats the page we send when the form submits
+})
 
 router.post('/', async (req,res) => {   // when we submit a form its gona call this router.post which will tkae it to / after the article
 
-    const article = new Article({
+    let article = new Article({  // weve created a new article and passed in our all of our new articles
         title: req.body.title,
-        description: req.body.description,
+        description: req.body.description, // takes whatever we pass in the form 
         markdown: req.body.markdown
 
     })
-    await article.save()
-    console.log ('weve posted')
 
+    try{ 
+   article =  await article.save()
+   res.redirect(`/articles/${article.id}`) // redirecting to the article id page if it saves properly
+    } catch (e) {
+        console.log(e)
+    res.render('articles/new', {article: article})
+    }
 })
 
 module.exports = router

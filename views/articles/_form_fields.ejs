@@ -4,14 +4,14 @@ that we are calling upon this form fields ejs everytime we need to edit or creat
 
 <div class="form-group">
     <label for="title"> Title </label> <!-- required after the input below just means you cant submit the form without entering the info-->
-    <input required type="text" name="title" id="title" 
-    class="form-control"> <!-- form control is just a type of styling with bootstrap-->
+    <input required value = "<%= article.title %>" type="text" name="title" id="title"
+    class="form-control"> <!-- form control is just a type of styling with bootstrap--> <!-- the value next to required allows us to prepoppulate the field to store whatever title we enetered before if we didnt get to complete it-->
     </div>
     <!-- Above is the first div for the title part when the user selects new article-->
     
     <div class="form-group">
         <label for="description"> Description </label> 
-        <textarea name="description" id="description" class="form-control"></textarea> <!--text area just means area when you can type-->
+        <textarea name="description" id="description" class="form-control"> <% article.description %> </textarea> <!--text area just means area when you can type-->
      <!-- form control is just a type of styling with bootstrap-->
        
         </div>
@@ -19,7 +19,7 @@ that we are calling upon this form fields ejs everytime we need to edit or creat
     
         <div class="form-group">
             <label for="markdown"> Markdown </label> 
-            <textarea name="markdown" id="markdown" class="form-control"></textarea> <!--text area just means area when you can type-->
+            <textarea required name="markdown" id="markdown" class="form-control"> <% article.markdown %> </textarea> <!--text area just means area when you can type-->
          <!-- form control is just a type of styling with bootstrap-->
            
             </div>

@@ -1,6 +1,7 @@
 // all routes directly related to articles, e.g "Read more", "Edit"
 
 const express = require ('express')
+const { route } = require('express/lib/application')
 const Article = require ('./../models/article')
 const router = express.Router() // this is a function and gives us a route we can use to do get requests, similar to the app.gets
 // we have to tell our app to use this route, so we have to export the module and use it in our other js files
@@ -12,8 +13,8 @@ router.get ('/new', (req, res) => {
     res.render ('articles/new', {article: new Article()}) // we're passing in a brand new defualt article to stop it reloading something thats not valid
 })
 
-router.get ('/:id', async (req,res)=>{  //we've set up the route to respond to article id's
-const article = await Article.findById(req.params.id) // get the article
+router.get ('/:slug', async (req,res)=>{  //we've set up the route to respond to article id's
+const article = await Article.findOne({slug: req.params.slug}) // get the article
  if (article ==null) res.redirect('/')
 res.render('./articles/show', {article: article}) // we send this id when a new file is created it's stored in /show because thats the page we send when the form submits
 })
@@ -29,11 +30,17 @@ router.post('/', async (req,res) => {   // when we submit a form its gona call t
 
     try{ 
    article =  await article.save()
-   res.redirect(`/articles/${article.id}`) // redirecting to the article id page if it saves properly
+   res.redirect(`/articles/${article.slug}`) // redirecting to the article id page if it saves properly
     } catch (e) {
         console.log(e)
     res.render('articles/new', {article: article})
     }
+})
+
+router.delete ('/:id', async (req,res)=>{ // deleting article is an asyrnconhous function
+
+    await Article.findByIdAndDelete(req.params.id)
+    res.redirect('/')
 })
 
 module.exports = router

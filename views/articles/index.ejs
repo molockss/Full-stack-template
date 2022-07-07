@@ -21,8 +21,9 @@
                         <div class="card-subtitle text-muted mb-2"> 
                             <%= article.createdAt.tolocalDateString %> <!-- converts the date/time into strinf-->
                         </div> <!-- the text muted just makes the text grey-->  
-                        <div class="card-text mb-2"><%= article.description %></div>
-                        <a href="articles/<%= article.id %>" class="btn btn-primary"> Read More</a>
+                        <div class="card-text mb-2"><%= article.description %></div> 
+                        <a href="articles/<%= article.slug %>" class="btn btn-primary"> Read More</a> <!-- Button that shows us the rest of the article-->
+                        <form action="/articles/<%= article.id %>?_method=DELETE" method="POST" class="d-inline"><button type="button" class="btn btn-danger">Delete</button>
                     </div>  
                 </div>
               <% }) %>

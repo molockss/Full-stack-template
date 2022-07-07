@@ -4,6 +4,7 @@ const Article = require ('./models/article') // we're passing in our stored arti
 const mongoose = require ('mongoose')
 const app = express()
 const cors = require('cors')
+const methodOverride = require ('method-override')
 
 require('dotenv').config()
 dbstring = 'mongodb+srv://molocks:Atwc3359@cluster0.ieiq2.mongodb.net/?retryWrites=true&w=majority'
@@ -27,7 +28,7 @@ app.set ('view engine', 'ejs' )  // view engine converts ejs code to html
 
 app.use (express.urlencoded({ extended: false})) // allows use to acces the form data from our article route
 
-
+app.use(methodOverride('_method')) // now anytime we pass in the _method it will call upon our delete router
 
 
 app.get ('/', async (req,res)=> {

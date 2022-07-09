@@ -26,7 +26,7 @@
      <a href="/articles/edit/ <%=article.slug %>" class="btn btn-info"> Edit </a>
 
      <div>
-     <%= article.markdown %>
+     <%- article.sanitizedHtml %> <!-- this dispalys raw html om the page, instead of markdown-->
      </div>
 
      </div>

@@ -10,7 +10,13 @@ const router = express.Router() // this is a function and gives us a route we ca
 
 
 router.get ('/new', (req, res) => {
-    res.render ('articles/new', {article: new Article()}) // we're passing in a brand new defualt article to stop it reloading something thats not valid
+    res.render ('articles/new', {article: new Article() }) // we're passing in a brand new defualt article to stop it reloading something thats not valid
+})
+
+router.get ('/edit/:id', async (req, res) => {
+    const article = await Article.findById(req.params.id)
+    res.render('articles/edit', {article: article})
+    
 })
 
 router.get ('/:slug', async (req,res)=>{  //we've set up the route to respond to article id's
@@ -18,6 +24,7 @@ const article = await Article.findOne({slug: req.params.slug}) // get the articl
  if (article ==null) res.redirect('/')
 res.render('./articles/show', {article: article}) // we send this id when a new file is created it's stored in /show because thats the page we send when the form submits
 })
+
 
 router.post('/', async (req,res) => {   // when we submit a form its gona call this router.post which will tkae it to / after the article
 
@@ -36,11 +43,37 @@ router.post('/', async (req,res) => {   // when we submit a form its gona call t
     res.render('articles/new', {article: article})
     }
 })
+  
+ router.put('/:id', async (req,res, next) => {   // when we submit a form its gona call this router.post which will tkae it to / after the article
+        req.article = await Article.findById(req.params.id)
+        next()
+            }), saveArticleandRedirect('edit'), // runs the function which combines put and post
+        
 
 router.delete ('/:id', async (req,res)=>{ // deleting article is an asyrnconhous function
 
     await Article.findByIdAndDelete(req.params.id)
     res.redirect('/')
 })
+
+
+function saveArticleandRedirect (path){
+    return async (req,res)=>{
+        let article = req.article
+        
+        article.title = req.body.title
+        article.description = req.body.description // takes whatever we pass in the form 
+        article.markdown = req.body.markdown
+
+        try{ 
+       article =  await article.save()
+       res.redirect(`/articles/${article.slug}`) // redirecting to the article id page if it saves properly
+        } catch (e) {
+            console.log(e)
+        res.render(`articles/${path}`, {article: article})
+        }
+
+    }
+}
 
 module.exports = router
